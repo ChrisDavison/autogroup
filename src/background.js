@@ -1,3 +1,4 @@
+import { getPauseState, isPauseChange, isPaused, setPaused } from "./pause.js";
 import { findMatchingRule, loadConfig } from "./rules.js";
 
 // Tab events arrive in bursts (URL, then title, then title again), so all
@@ -52,7 +53,10 @@ async function findGroup(title, tab) {
 // Returns true if the tab was moved into a group.
 async function processTab(tab, config) {
   const { rules, settings } = config;
-  if (!settings.enabled || tab.pinned) return false;
+  if (!settings.enabled || tab.pinned || (await isPaused(tab))) {
+    await setDeferred(tab.id, false);
+    return false;
+  }
 
   const win = await chrome.windows.get(tab.windowId);
   if (win.type !== "normal") return false;
@@ -141,10 +145,40 @@ chrome.tabs.onUpdated.addListener((tabId, change) => {
 chrome.tabs.onActivated.addListener(() => enqueue(processDeferred));
 
 chrome.tabs.onRemoved.addListener((tabId) =>
-  enqueue(() => setDeferred(tabId, false)),
+  enqueue(async () => {
+    await setDeferred(tabId, false);
+    await setPaused("tab", tabId, false);
+  }),
 );
 
-chrome.action.onClicked.addListener(() => chrome.runtime.openOptionsPage());
+chrome.windows.onRemoved.addListener((windowId) =>
+  enqueue(() => setPaused("window", windowId, false)),
+);
+
+// The toolbar badge reads "off" on tabs that autogroup will leave alone.
+async function updateBadge(tab) {
+  const { settings } = await loadConfig();
+  const state = await getPauseState(tab);
+  const off = !settings.enabled || state.tab || state.window;
+  await chrome.action.setBadgeText({ tabId: tab.id, text: off ? "off" : "" });
+}
+
+async function updateActiveBadges() {
+  for (const tab of await chrome.tabs.query({ active: true })) {
+    await updateBadge(tab).catch(() => {});
+  }
+}
+
+chrome.action.setBadgeBackgroundColor({ color: "#777" });
+chrome.tabs.onActivated.addListener(updateActiveBadges);
+chrome.tabs.onUpdated.addListener((_tabId, change, tab) => {
+  if (change.status === "loading") updateBadge(tab).catch(() => {});
+});
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" ? "settings" in changes : isPauseChange(changes)) {
+    updateActiveBadges();
+  }
+});
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message?.type === "applyAll") {

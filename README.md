@@ -7,8 +7,7 @@ rules, e.g. "YouTube pages with *ASMR* in the title go to the **Media** group".
 
 1. Open `brave://extensions` and turn on **Developer mode**.
 2. Click **Load unpacked** and choose the `src/` folder.
-3. Click the extension's toolbar icon (or **Details → Extension options**) to
-   add rules.
+3. Click the extension's toolbar icon, then **Edit rules…**, to add rules.
 
 After changing code, click the reload button on the extension's card.
 
@@ -46,6 +45,21 @@ own window, drag the group into a window once. From then on, new matches go
 there. This also holds after a restart, as long as Brave is set to reopen your
 previous tabs, because it restores groups with their names.
 
+## Pausing
+
+The toolbar popup has switches to pause autogrouping for the current tab or the
+whole window. Paused tabs, and every tab in a paused window, are never moved or
+grouped. Tabs elsewhere can still be moved into groups that live in a paused
+window. The toolbar icon shows an "off" badge while the current tab is paused.
+
+Pauses last until Brave restarts, and a pause ends when its tab or window
+closes. After you unpause, the tab is sorted the next time its URL or title
+changes.
+
+The popup also has a switch that turns autogrouping off everywhere.
+
+## Applying rules to existing tabs
+
 **Apply rules to open tabs** on the options page runs the rules over every
 tab you already have open.
 
@@ -58,4 +72,6 @@ npm test   # unit tests for rule matching (Node 20+)
 - `src/rules.js` holds rule validation, matching, and storage. Rules are
   stored in `chrome.storage.sync`.
 - `src/background.js` is the service worker that watches tabs and moves them.
-- `src/options.*` is the rules editor.
+- `src/pause.js` stores per-tab and per-window pauses in
+  `chrome.storage.session`.
+- `src/options.*` is the rules editor; `src/popup.*` is the toolbar popup.

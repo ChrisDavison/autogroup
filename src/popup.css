@@ -1,0 +1,33 @@
+:root {
+  color-scheme: light dark;
+  font: 13px/1.5 system-ui, sans-serif;
+}
+
+body {
+  width: 260px;
+  margin: 12px;
+}
+
+label {
+  display: block;
+  margin: 4px 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  margin: 8px 0;
+}
+
+.hint {
+  color: color-mix(in srgb, currentColor 60%, transparent);
+  margin: 6px 0;
+}
+
+.hint:empty {
+  display: none;
+}
+
+label:has(input:disabled) {
+  opacity: 0.5;
+}

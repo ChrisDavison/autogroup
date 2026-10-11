@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+    <script type="module" src="popup.js"></script>
+  </head>
+  <body>
+    <label>
+      <input type="checkbox" id="enabled" />
+      Group tabs automatically
+    </label>
+    <hr />
+    <label>
+      <input type="checkbox" id="pauseTab" />
+      Pause for this tab
+    </label>
+    <label>
+      <input type="checkbox" id="pauseWindow" />
+      Pause for this window
+    </label>
+    <p id="match" class="hint"></p>
+    <p class="hint">Pauses last until Brave restarts.</p>
+    <a href="#" id="options">Edit rules…</a>
+  </body>
+</html>
