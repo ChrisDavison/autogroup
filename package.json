@@ -1,5 +1,5 @@
 {
-  "name": "brave-autogroup",
+  "name": "autogroup",
   "private": true,
   "type": "module",
   "scripts": {

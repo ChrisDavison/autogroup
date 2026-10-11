@@ -1,11 +1,13 @@
 # Autogroup
 
-A Brave (or Chrome) extension that moves tabs into named tab groups using
-rules, e.g. "YouTube pages with *ASMR* in the title go to the **Media** group".
+A browser extension for Chrome and other Chromium-based browsers (Brave,
+Edge, Vivaldi, …) that moves tabs into named tab groups using rules, e.g.
+"YouTube pages with *ASMR* in the title go to the **Media** group".
 
 ## Install
 
-1. Open `brave://extensions` and turn on **Developer mode**.
+1. Open `chrome://extensions` and turn on **Developer mode**. (Other Chromium
+   browsers redirect this address to their own extensions page.)
 2. Click **Load unpacked** and choose the `src/` folder.
 3. Click the extension's toolbar icon, then **Edit rules…**, to add rules.
 
@@ -42,8 +44,8 @@ options.
 
 Groups are found by name, so there's nothing to set up. To keep "Media" in its
 own window, drag the group into a window once. From then on, new matches go
-there. This also holds after a restart, as long as Brave is set to reopen your
-previous tabs, because it restores groups with their names.
+there. This also holds after a restart, as long as the browser is set to reopen
+your previous tabs, because it restores groups with their names.
 
 ## Pausing
 
@@ -52,7 +54,7 @@ whole window. Paused tabs, and every tab in a paused window, are never moved or
 grouped. Tabs elsewhere can still be moved into groups that live in a paused
 window. The toolbar icon shows an "off" badge while the current tab is paused.
 
-Pauses last until Brave restarts, and a pause ends when its tab or window
+Pauses last until the browser restarts, and a pause ends when its tab or window
 closes. After you unpause, the tab is sorted the next time its URL or title
 changes.
 
