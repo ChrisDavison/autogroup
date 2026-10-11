@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Autogroup rules</title>
+    <link rel="stylesheet" href="options.css" />
+    <script type="module" src="options.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>Autogroup</h1>
+      <p class="hint">
+        When a tab's address or title changes, the first matching rule moves it
+        into the tab group with that name, in whichever window the group is in.
+        If no such group is open, one is created in the tab's current window.
+      </p>
+
+      <section class="settings">
+        <label>
+          <input type="checkbox" id="enabled" />
+          Group tabs automatically
+        </label>
+        <label>
+          <input type="checkbox" id="deferActiveMoves" />
+          Don't move the tab I'm viewing to another window until I switch tabs
+        </label>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Rules</h2>
+          <span id="status" class="status" aria-live="polite"></span>
+        </div>
+        <p class="hint">
+          <b>Domain</b> includes subdomains (<code>youtube.com</code> also
+          matches <code>www.youtube.com</code>). <b>Pattern</b> is a
+          case-insensitive regular expression, e.g. <code>asmr|white noise</code>.
+          Leave either blank to match anything.
+        </p>
+        <ol id="rules"></ol>
+        <p id="empty" class="hint" hidden>No rules yet.</p>
+        <div class="actions">
+          <button id="add">Add rule</button>
+          <button id="apply">Apply rules to open tabs</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Test</h2>
+        <div class="test-grid">
+          <input id="testUrl" type="url" placeholder="https://www.youtube.com/watch?v=…" />
+          <input id="testTitle" placeholder="Page title" />
+        </div>
+        <p id="testResult" class="hint"></p>
+      </section>
+    </main>
+
+    <template id="ruleTemplate">
+      <li class="rule">
+        <div class="row">
+          <input type="checkbox" data-field="enabled" title="Enabled" />
+          <input data-field="group" placeholder="Group name" class="group" />
+          <select data-field="color" title="Group colour"></select>
+          <span class="spacer"></span>
+          <button data-action="up" title="Move up">↑</button>
+          <button data-action="down" title="Move down">↓</button>
+          <button data-action="delete" title="Delete">✕</button>
+        </div>
+        <div class="row">
+          <input data-field="domain" placeholder="Domain (optional)" />
+          <input data-field="pattern" placeholder="Pattern (optional)" class="pattern" />
+          <select data-field="field" title="What the pattern is tested against">
+            <option value="either">URL or title</option>
+            <option value="url">URL only</option>
+            <option value="title">Title only</option>
+          </select>
+        </div>
+        <p class="errors"></p>
+      </li>
+    </template>
+  </body>
+</html>

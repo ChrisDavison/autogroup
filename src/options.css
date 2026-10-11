@@ -1,0 +1,128 @@
+:root {
+  color-scheme: light dark;
+  --border: color-mix(in srgb, currentColor 20%, transparent);
+  --muted: color-mix(in srgb, currentColor 60%, transparent);
+  --error: #d93025;
+  font: 14px/1.5 system-ui, sans-serif;
+}
+
+main {
+  max-width: 760px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+h1 {
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-size: 16px;
+  margin: 0;
+}
+
+section {
+  margin-top: 28px;
+}
+
+.hint {
+  color: var(--muted);
+}
+
+.settings label {
+  display: block;
+  margin: 6px 0;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.status {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+#rules {
+  list-style: none;
+  padding: 0;
+  counter-reset: rule;
+}
+
+.rule {
+  counter-increment: rule;
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px 2px 36px;
+  margin-bottom: 10px;
+}
+
+.rule::before {
+  content: counter(rule);
+  position: absolute;
+  left: 12px;
+  top: 14px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.rule.invalid {
+  border-color: var(--error);
+}
+
+.rule.disabled > .row:last-of-type,
+.rule.disabled .group {
+  opacity: 0.5;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.row input:not([type="checkbox"]) {
+  flex: 1;
+  min-width: 0;
+}
+
+.row .pattern {
+  flex: 2;
+  font-family: ui-monospace, monospace;
+}
+
+.spacer {
+  flex: 1;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  padding: 4px 8px;
+}
+
+.errors {
+  color: var(--error);
+  font-size: 12px;
+  margin: 0 0 8px;
+}
+
+.errors:empty {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.test-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
