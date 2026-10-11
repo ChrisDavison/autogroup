@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Autogroup",
+  "version": "0.1.0",
+  "description": "Moves tabs into named tab groups using URL and title rules.",
+  "minimum_chrome_version": "114",
+  "permissions": ["tabs", "tabGroups", "storage"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_title": "Autogroup rules"
+  }
+}
